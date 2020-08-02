@@ -1,0 +1,37 @@
+scalar Date
+
+type Query {
+    hello: String!
+    info(symbol: String!): String!
+    symbols: [Symbol]
+    prices(symbol: String, start: Date, end: Date): [Price]
+}
+
+type Symbol {
+    exchange: String
+    symbol: String
+    name: String
+}
+
+type Price {
+    date: Date
+    symbol: String
+    open: Float
+    close: Float
+    high: Float
+    low: Float
+}
+
+type Predict {
+    symbol: String
+    growth: [Growth]
+}
+
+type Growth {
+    algo: String
+    startDate: Date
+    endDate: Date
+    days: Int
+    price: Float
+    percent: Float
+}
