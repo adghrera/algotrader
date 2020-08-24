@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-class Symbols(db.Model):
+class Symbol(db.Model):
     id = db.Column(types.Integer, primary_key=True)
     name = db.Column(types.String(100))
     symbol = db.Column(types.String(10), unique=True, index=True)
@@ -31,9 +31,9 @@ class Symbols(db.Model):
         self.end_date = None
 
 
-class Prices(db.Model):
+class Price(db.Model):
     id = db.Column(types.Integer, primary_key=True)
-    symbol_id = db.Column(types.Integer, ForeignKey('symbols.id'), index=True)
+    symbol_id = db.Column(types.Integer, ForeignKey('symbol.id'), index=True)
     date = db.Column(types.Date, index=True)
     open = db.Column(types.Float)
     close = db.Column(types.Float)
@@ -55,12 +55,13 @@ class Prices(db.Model):
 
 
 def setup():
-    global db
+    global db, db_uri
     db_uri = 'mysql+pymysql://demo:demo@localhost/demo'
     app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     db = SQLAlchemy(app)
+    # db.drop_all()
     db.create_all()
 
 
-db.drop_all()
-db.create_all()
+# db.drop_all()
+# db.create_all()
